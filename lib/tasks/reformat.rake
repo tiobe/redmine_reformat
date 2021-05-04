@@ -42,6 +42,7 @@ namespace :reformat do
     convcfg = opts[:converters_json] && JSON.parse(opts[:converters_json])
     convcfg = convcfg && JSON.pretty_generate(convcfg) || '(use default converters)'
     printopts[:converters_json] = convcfg
+    printopts[:from_formatting] ||= "(based on your Setting.text_formatting: #{Setting.text_formatting})"
     io.puts "Running with setup:"
     PP.pp(printopts, io)
   end
