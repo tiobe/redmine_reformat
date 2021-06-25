@@ -24,8 +24,11 @@ And restart your Redmine.
 
 ### Installing Converter Dependencies
 
-If using `TextileToMarkdown` converter, [install pandoc](https://pandoc.org/installing.html).
-The other provided converters have no direct dependencies.
+If using `TextileToMarkdown` converter,
+[install pandoc](https://pandoc.org/installing.html) version 2.2 or newer.
+
+The other provided converters have no direct dependencies except those
+installed with `bundle install`.
 
 ## Basic Usage
 

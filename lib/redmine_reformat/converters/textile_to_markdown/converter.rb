@@ -15,6 +15,16 @@ module RedmineReformat::Converters::TextileToMarkdown
 
   private
   class Conversion
+    PANDOC_COMMAND = [
+      'pandoc',
+      '--wrap=preserve',
+      '-f',
+      'textile-smart',
+      '-t',
+      'gfm'
+    ]
+    PANDOC_RECOVERABLE_EXIT_CODES = []
+
     # receives textile, returns markdown
     def initialize(textile, ctx)
       @textile = textile.dup
@@ -27,16 +37,7 @@ module RedmineReformat::Converters::TextileToMarkdown
       return String.new if @textile.empty?
       pre_process_textile @textile
 
-      command = [
-        'pandoc',
-        '--wrap=preserve',
-        '-f',
-        'textile-smart',
-        '-t',
-        'gfm'
-      ]
-
-      output = exec_with_timeout(command.join(' '), stdin: @textile)
+      output = exec_pandoc_with_timeout(stdin: @textile)
       post_process_markdown output if output
     end
 
@@ -172,15 +173,17 @@ module RedmineReformat::Converters::TextileToMarkdown
       markdown
     end
 
-    def exec_with_timeout(cmd, timeout: 30, stdin:)
+    def exec_pandoc_with_timeout(timeout: 30, stdin:)
       pid = nil
-      result = nil
+      output = nil
+      status = nil
       begin
         Timeout.timeout(timeout) do
-          Open3.popen2(cmd) do |i, o, t|
+          Open3.popen2(PANDOC_COMMAND.join(' ')) do |i, o, t|
             pid = t.pid
             (i << stdin).close
-            result = o.read
+            output = o.read
+            status = t.value
           end
         end
       rescue Timeout::Error
@@ -191,8 +194,18 @@ module RedmineReformat::Converters::TextileToMarkdown
         end
         Process.detach(pid)
         STDERR.puts("[ERROR] #{@reference} - pandoc execution timeout")
+        return nil # recoverable
       end
-      result
+
+      return nil unless status && status.exited?
+      if status.success?
+        output
+      elsif PANDOC_RECOVERABLE_EXIT_CODES.include? status.exitstatus
+        STDERR.puts("[ERROR] #{@reference} - pandoc execution failed (#{status}).")
+        nil
+      else
+        raise "Persistent pandoc error occured, check pandoc version. Aborting. (#{status})"
+      end
     end
   end
 end
