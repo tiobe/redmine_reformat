@@ -40,7 +40,7 @@ Dry run:
 rake reformat:convert to_formatting=markdown dryrun=1
 ```
 
-Parallel processing (Unix/Linux only):
+Parallel processing (Unix/Linux only, tested with PostgreSQL):
 ```sh
 rake reformat:convert to_formatting=markdown workers=10
 ```
