@@ -410,7 +410,7 @@ Limitations:
 
 ### `Ws`
 
-Usage: `['Ws', '<url>']`\
+Usage: `['Ws', '<url>', options]`\
 Arguments:
 - `url` - address of the web service that performs conversion.
 - `options` - a hash with optional parameters:
