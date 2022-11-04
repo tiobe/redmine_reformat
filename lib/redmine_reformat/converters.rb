@@ -7,7 +7,7 @@ module RedmineReformat
     class << self
       def from_json(json)
         cfg = JSON.parse(json, symbolize_names: true)
-        ConfiguredConverters.new(cfg) if cfg
+        RedmineReformat::Converters::ConfiguredConverters.new(cfg) if cfg
       end
     end
   end
