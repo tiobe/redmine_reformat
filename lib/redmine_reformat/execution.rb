@@ -44,7 +44,7 @@ module RedmineReformat
       mymeta = model.select('MAX(id) max_id, MIN(id) min_id, COUNT(id) count_id')
         .from(scope.offset(offset).limit(limit).select(:id))
         .reorder(nil)
-        .first
+        .take
 
       @progress.start(item, mymeta.count_id, total)
       myscope = scope.where(id: mymeta.min_id..mymeta.max_id)
