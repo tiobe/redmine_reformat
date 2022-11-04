@@ -8,7 +8,7 @@ namespace :reformat do
     opts = common_opts(ENV).merge({
       dryrun: ![nil, '', '0', 'false', 'no'].include?(ENV['dryrun']),
     })
-    invoker = RedmineReformat::Invoker.new(opts)
+    invoker = RedmineReformat::Invoker.new(**opts)
     print_reformat_setup_summary(STDERR, opts)
     invoker.run
   end
@@ -20,7 +20,7 @@ namespace :reformat do
       port: (ENV['port'] || 3030).to_i,
       from_formatting: ENV['from_formatting'],
     })
-    microservice = RedmineReformat::Microservice.new(opts)
+    microservice = RedmineReformat::Microservice.new(**opts)
     print_reformat_setup_summary(STDERR, opts)
     microservice.run
   end
