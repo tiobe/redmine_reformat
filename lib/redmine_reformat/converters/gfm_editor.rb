@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'commonmarker_fixed_sourcepos'
-require_relative 'source_pos'
 
 module RedmineReformat::Converters
   class GfmEditor

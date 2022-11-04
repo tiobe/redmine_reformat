@@ -1,7 +1,6 @@
-$: << File.join(File.dirname(__FILE__), 'lib')
-
 require 'getoptlong'
-require 'redmine_reformat/converters/textile_to_markdown/converter'
+require 'active_support/dependencies'
+ActiveSupport::Dependencies.autoload_paths << File.expand_path('../lib', __FILE__)
 
 Dir.chdir(File.join(File.dirname(__FILE__), 'test', 'fixtures', 'textile_to_markdown'))
 

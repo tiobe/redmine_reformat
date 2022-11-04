@@ -1,5 +1,4 @@
-require_relative '../../test_helper'
-require 'redmine_reformat/converters/gfm_editor'
+require File.expand_path('../../../test_helper', __FILE__)
 
 class RedmineReformat::Converters::GfmEditorTest < ActiveSupport::TestCase
   GfmEditor = RedmineReformat::Converters::GfmEditor

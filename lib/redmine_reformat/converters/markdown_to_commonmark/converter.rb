@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../gfm_editor'
-require_relative '../macros'
-
 module RedmineReformat::Converters::MarkdownToCommonmark
   class Converter
     GfmEditor = RedmineReformat::Converters::GfmEditor

@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'redmine_reformat/converters'
-require 'redmine_reformat/execution'
-require 'redmine_reformat/execution/ipc'
-require 'redmine_reformat/progress'
-
 module RedmineReformat
   class Invoker
     attr_reader :to_formatting, :dryrun, :workers
@@ -21,7 +16,7 @@ module RedmineReformat
       STDOUT.sync = true
       STDERR.sync = true
       if @workers == 1
-        convert_redmine(ReformatProgress.new)
+        convert_redmine(Progress.new)
       else
         multi_run
       end
@@ -50,7 +45,7 @@ module RedmineReformat
       end
       wpipes.flatten.each{|fd| fd.close}
       progress_srv_ipc = Ipc.new("Progress collector", ppipes, 1)
-      progress = ReformatProgress.new
+      progress = Progress.new
       progress.server(progress_srv_ipc)
       Process.waitall
     end

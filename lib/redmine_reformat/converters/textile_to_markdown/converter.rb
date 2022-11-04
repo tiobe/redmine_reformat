@@ -4,7 +4,6 @@ require 'set'
 require 'open3'
 require 'tempfile'
 require 'timeout'
-require 'redmine_reformat/converters/textile_to_markdown/pandoc_preprocessing'
 
 module RedmineReformat::Converters::TextileToMarkdown
   class Converter

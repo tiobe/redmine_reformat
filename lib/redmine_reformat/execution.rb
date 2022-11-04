@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'redmine_reformat/converters/configured_converters'
-
 module RedmineReformat
   class Execution
     attr_accessor :dryrun, :converter, :to_formatting

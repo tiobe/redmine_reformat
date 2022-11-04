@@ -4,8 +4,6 @@
 # Written by Martin Cizek, Orchitech Solutions
 # Contains portions of Redmine and Redcloth3 code
 
-require 'redmine_reformat/converters/placeholders'
-require 'redmine_reformat/converters/textile_to_markdown/markdown-table-formatter/table-formatter'
 require 'htmlentities'
 
 module RedmineReformat::Converters::TextileToMarkdown
@@ -1003,7 +1001,7 @@ module RedmineReformat::Converters::TextileToMarkdown
     def md_reformat_tables(text)
       text.gsub!(/(^\|[^\n]+\|$\n)+/m) do |table|
         begin
-          table = MarkdownTableFormatter.new(table).to_md
+          table = MarkdownTableFormatter::TableFormatter.new(table).to_md
         rescue
           # keep it as it is
           STDERR.puts("[WARNING] #{@reference} - reformatting MD table failed")

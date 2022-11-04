@@ -1,4 +1,4 @@
-require_relative '../../test_helper'
+require File.expand_path('../../../test_helper', __FILE__)
 
 class RedmineReformat::Converters::RedmineFormatterConverterTest < ActiveSupport::TestCase
   Converter = RedmineReformat::Converters::RedmineFormatter::Converter

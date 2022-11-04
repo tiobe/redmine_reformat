@@ -1,5 +1,4 @@
-require_relative '../test_helper'
-require 'redmine_reformat/converters/placeholders'
+require File.expand_path('../../test_helper', __FILE__)
 
 class PlaceholdersTest < ActiveSupport::TestCase
   test "match_context_match should match the longest occurence" do

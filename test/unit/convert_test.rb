@@ -1,5 +1,4 @@
-require_relative '../test_helper'
-require 'redmine_reformat/converters/textile_to_markdown/converter'
+require File.expand_path('../../test_helper', __FILE__)
 
 class TextileToMarkdownConverterTest < ActiveSupport::TestCase
 

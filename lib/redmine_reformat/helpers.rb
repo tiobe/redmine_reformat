@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'helpers/reformat_application_helper'
-
 module RedmineReformat
   module Helpers
     def with_application_helper(opts, ctx, metadata = {}, &block)

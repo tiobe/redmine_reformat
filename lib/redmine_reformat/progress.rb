@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RedmineReformat
-  class ReformatProgress
+  class Progress
     def initialize
       @totals = Hash.new
       @subtotals = Hash.new {|h,k| h[k] = 0}
@@ -91,7 +91,7 @@ module RedmineReformat
     end
   end
 
-  class ReformatWorkerProgress < ReformatProgress
+  class ReformatWorkerProgress < Progress
     def initialize(ipc)
       super()
       @ipc = ipc
