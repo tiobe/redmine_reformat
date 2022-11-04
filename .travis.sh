@@ -21,7 +21,7 @@ then
 fi
 
 export RAILS_ENV=test
-export REDMINE_GIT_REPO=git://github.com/redmine/redmine.git
+export REDMINE_GIT_REPO=https://github.com/redmine/redmine.git
 export REDMINE_GIT_TAG=$REDMINE_VER
 export BUNDLE_GEMFILE=$PATH_TO_REDMINE/Gemfile
 
