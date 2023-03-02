@@ -1,4 +1,5 @@
 gem 'net-http-persistent'
+gem 'webrick', '~> 1.6'
 
 # commonmarker with patch for fixing sourcepos values
 # see https://github.com/commonmark/cmark/pull/298
