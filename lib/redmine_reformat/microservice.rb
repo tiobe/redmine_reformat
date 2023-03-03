@@ -51,6 +51,7 @@ module RedmineReformat
     end
   end
 
+  private
   class MicroserviceServlet < WEBrick::HTTPServlet::FileHandler
     HTTPStatus = WEBrick::HTTPStatus
 

@@ -16,7 +16,7 @@ module RedmineReformat
       STDOUT.sync = true
       STDERR.sync = true
       if @workers == 1
-        convert_redmine(Progress.new)
+        convert_redmine(RedmineReformat::Execution::Progress.new)
       else
         multi_run
       end
@@ -37,7 +37,7 @@ module RedmineReformat
       pids = @workers.times.collect do |i|
         Process.fork do
           progress_ipc = Ipc.new("Worker #{i} Progress", ppipes, 0)
-          progress = RedmineReformat::ReformatWorkerProgress.new(progress_ipc)
+          progress = RedmineReformat::Execution::ReformatWorkerProgress.new(progress_ipc)
           worker_ipc = Ipc.new("Worker #{i}", wpipes, i)
           convert_redmine(progress, worker_ipc)
           exit 0
@@ -45,7 +45,7 @@ module RedmineReformat
       end
       wpipes.flatten.each{|fd| fd.close}
       progress_srv_ipc = Ipc.new("Progress collector", ppipes, 1)
-      progress = Progress.new
+      progress = RedmineReformat::Execution::Progress.new
       progress.server(progress_srv_ipc)
       Process.waitall
     end

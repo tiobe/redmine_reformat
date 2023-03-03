@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module RedmineReformat
+  private
   class Spec
     def initialize(klass, cols, subset = nil, args = {})
       @klass = klass
@@ -61,6 +62,7 @@ module RedmineReformat
     end
   end
 
+  public
   class ConvertRedmine
 
     BATCHSIZE = 100 # xxx remove
