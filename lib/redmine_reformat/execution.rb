@@ -47,8 +47,11 @@ module RedmineReformat
         .take
 
       @progress.start(item, mymeta.count_id, total)
-      myscope = scope.where(id: mymeta.min_id..mymeta.max_id)
-      myscope
+      if mymeta.count_id > 0
+        scope.where(id: mymeta.min_id..mymeta.max_id)
+      else
+        scope.where('1=0')
+      end
     end
 
     def mytotal(item)
