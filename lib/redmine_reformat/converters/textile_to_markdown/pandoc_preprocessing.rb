@@ -839,6 +839,13 @@ module RedmineReformat
           end
         end
 
+        # remove spaces in !{ width: 200px }.*!
+        def remove_spaces_in_image_width(text)
+          text.gsub!(/!\{\\s*(width:.*)\\s*\}(.+?)!/) do
+            "!{#{$1}}#{$2}!"
+          end
+        end
+
         # replace %{color:green} something% with <span style="color:green;">something</span>
         def replace_color_styling(text)
           text.gsub!(/%\{color:([^}]+)\}(.+?)%/) do

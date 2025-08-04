@@ -141,6 +141,9 @@ module RedmineReformat
           # Prefer inline code using backtics over code html tag (code is already protected as an offtag)
           prefer_inline_code_over_html textile
 
+          # remove spaces in image width macro
+          remove_spaces_in_image_width
+          
           # custom color formatting
           replace_color_styling textile
 
