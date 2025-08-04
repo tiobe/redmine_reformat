@@ -839,6 +839,13 @@ module RedmineReformat
           end
         end
 
+        # replace %{color:green} something% with <span style="color:green;">something</span>
+        def replace_color_styling(text)
+          text.gsub!(/%\{color:([^}]+)\}(.+?)%/) do
+            "<span style=\"color:#{$1}\">#{$2}</span>"
+          end
+        end
+
         def protect_eq_sequences(text)
           text.gsub!(/={2,}/) do |m|
             @ph.ph_for_each(m, :both, :qtag)

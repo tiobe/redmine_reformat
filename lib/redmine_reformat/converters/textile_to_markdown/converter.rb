@@ -11,6 +11,7 @@ module RedmineReformat
 
       class Converter
         def convert(text, ctx = nil)
+          text = text.dup.force_encoding("UTF-8") unless text.encoding == Encoding::UTF_8
           Conversion.new(text, ctx).call
         end
       end
@@ -140,6 +141,9 @@ module RedmineReformat
           # Prefer inline code using backtics over code html tag (code is already protected as an offtag)
           prefer_inline_code_over_html textile
 
+          # custom color formatting
+          replace_color_styling textile
+
           # prevent sequences of = to be interpreted as <notextile>, see RedmineReformat#no_textile
           protect_eq_sequences textile
 
@@ -180,17 +184,27 @@ module RedmineReformat
           output = nil
           status = nil
           begin
-            Timeout.timeout(timeout) do
-              Open3.popen2(PANDOC_COMMAND.join(' ')) do |i, o, t|
-                pid = t.pid
-                (i << stdin).close
-                output = o.read
-                status = t.value
+            Tempfile.create(['pandoc_input', '.textile']) do |input_file|
+              input_file.write(stdin)
+              input_file.flush
+        
+              Tempfile.create(['pandoc_output', '.md']) do |output_file|
+                command = [
+                  "/bin/bash", "-c",
+                  "#{PANDOC_COMMAND.join(' ')} #{input_file.path} -o #{output_file.path}"
+                ]
+        
+                Timeout.timeout(timeout) do
+                  pid = spawn(*command)
+                  Process.wait(pid)
+                  status = $?
+                  output = File.read(output_file.path) if status.success?
+                end
               end
             end
           rescue Timeout::Error
             begin
-              Process.kill(-9, pid)
+              Process.kill('KILL', pid) if pid
             rescue Errno::ESRCH
               # already killed - ignoring
             end
