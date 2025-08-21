@@ -841,7 +841,7 @@ module RedmineReformat
 
         # remove spaces in !{ width: 200px }.*!
         def remove_spaces_in_image_width(text)
-          text.gsub!(/!\{\\s*(width:.*)\\s*\}(.+?)!/) do
+          text.gsub!(/!\{\s*(width:\s?\S*)\s*\}(.+?)!/) do
             "!{#{$1}}#{$2}!"
           end
         end
