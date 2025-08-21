@@ -142,7 +142,7 @@ module RedmineReformat
           prefer_inline_code_over_html textile
 
           # remove spaces in image width macro
-          remove_spaces_in_image_width
+          remove_spaces_in_image_width textile
           
           # custom color formatting
           replace_color_styling textile
